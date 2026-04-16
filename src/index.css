@@ -1,0 +1,431 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 33% 99%;
+    --foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --primary: 250 84% 54%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 6% 10%;
+
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
+
+    --accent: 250 84% 96%;
+    --accent-foreground: 250 84% 54%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 250 84% 54%;
+
+    --radius: 1rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 5.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 5.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 250 84% 54%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4% 14%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 4% 14%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 250 84% 16%;
+    --accent-foreground: 250 84% 54%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 250 84% 54%;
+
+    --sidebar-background: 240 10% 3.9%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 250 84% 54%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4% 14%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 4% 14%;
+    --sidebar-ring: 250 84% 54%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  p {
+    font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
+  }
+  
+  .glass-card {
+    @apply bg-white/70 dark:bg-black/20 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-lg;
+  }
+  
+  .gradient-border {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  
+  .gradient-border:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      rgba(155, 135, 245, 0.5) 0%,
+      rgba(30, 20, 50, 0.1) 100%
+    );
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  
+  /* Redesigned 3D Card Stack for Hero Section */
+  .perspective-3d {
+    perspective: 2000px;
+    transform-style: preserve-3d;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .card-stack {
+    position: relative;
+    width: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+  }
+  
+  .card-stack:hover {
+    transform: rotate3d(0.5, -0.5, 0, 15deg) translateY(-10px);
+  }
+  
+  .card-layer {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    transition: all 0.5s ease;
+  }
+  
+  .card-layer-1 {
+    transform: translateZ(-40px) translateX(20px) translateY(20px);
+  }
+  
+  .card-layer-2 {
+    transform: translateZ(-80px) translateX(40px) translateY(40px);
+  }
+  
+  .card-layer-3 {
+    transform: translateZ(-120px) translateX(60px) translateY(60px);
+  }
+  
+  .card-main {
+    position: relative;
+    width: 100%;
+    transform-style: preserve-3d;
+    z-index: 10;
+    transition: all 0.5s ease;
+  }
+  
+  /* Keep existing stacked card effects */
+  .perspective-card {
+    perspective: 1000px;
+  }
+  
+  /* Feature Card Stack */
+  .feature-card-stack {
+    position: relative;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
+  
+  .feature-card-stack:hover {
+    transform: translateY(-5px) rotateX(5deg);
+  }
+  
+  .feature-card-layer {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feature-card-layer-1 {
+    transform: translateZ(-12px) translateX(8px) translateY(8px);
+  }
+  
+  .feature-card-layer-2 {
+    transform: translateZ(-8px) translateX(4px) translateY(4px);
+  }
+  
+  .feature-card-layer-3 {
+    transform: translateZ(-4px) translateX(2px) translateY(2px);
+  }
+  
+  .feature-card-main {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    transform-style: preserve-3d;
+    z-index: 10;
+    background: white;
+    transition: all 0.3s ease;
+  }
+  
+  /* Enhanced feature card hover effects */
+  .feature-card-main.hover\:bg-gradient-pink-orange:hover {
+    background: linear-gradient(135deg, #ff5f6d 0%, #ffc371 100%);
+  }
+  
+  .feature-card-main.hover\:bg-gradient-purple-blue:hover {
+    background: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%);
+  }
+  
+  .feature-card-main.hover\:bg-gradient-green-cyan:hover {
+    background: linear-gradient(135deg, #10B981 0%, #06B6D4 100%);
+  }
+  
+  .feature-card-main.hover\:bg-gradient-yellow-orange:hover {
+    background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+  }
+  
+  /* Testimonial Card Stack */
+  .testimonial-card-stack {
+    position: relative;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
+  
+  .testimonial-card-stack:hover {
+    transform: translateY(-5px) rotateX(5deg);
+  }
+  
+  .testimonial-card-layer {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .testimonial-card-layer-1 {
+    transform: translateZ(-12px) translateX(8px) translateY(8px);
+  }
+  
+  .testimonial-card-layer-2 {
+    transform: translateZ(-8px) translateX(4px) translateY(4px);
+  }
+  
+  .testimonial-card-layer-3 {
+    transform: translateZ(-4px) translateX(2px) translateY(2px);
+  }
+  
+  .testimonial-card-main {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    transform-style: preserve-3d;
+    z-index: 10;
+    background: white;
+    transition: all 0.3s ease;
+  }
+  
+  /* CTA Card Stack */
+  .cta-card-stack {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
+  
+  .cta-card-stack:hover {
+    transform: translateY(-5px) rotateX(2deg);
+  }
+  
+  .cta-card-layer {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cta-card-layer-1 {
+    transform: translateZ(-12px) translateX(8px) translateY(8px);
+  }
+  
+  .cta-card-layer-2 {
+    transform: translateZ(-8px) translateX(4px) translateY(4px);
+  }
+  
+  .cta-card-layer-3 {
+    transform: translateZ(-4px) translateX(2px) translateY(2px);
+  }
+  
+  .cta-card-main {
+    position: relative;
+    z-index: 10;
+    transform-style: preserve-3d;
+    transition: all 0.3s ease;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-violet-400 bg-clip-text text-transparent;
+  }
+  
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+  
+  .glowing-button {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+  
+  .glowing-button:before {
+    @apply content-[''] absolute top-0 left-0 w-full h-full bg-gradient-to-r from-primary to-violet-600 opacity-0 transition-opacity duration-300;
+  }
+  
+  .glowing-button:hover:before {
+    @apply opacity-30;
+  }
+  
+  .input-glow {
+    @apply transition-shadow duration-300;
+  }
+  
+  .input-glow:focus {
+    @apply shadow-[0_0_15px_rgba(124,58,237,0.3)];
+  }
+  
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/10 border border-white/20 shadow-lg;
+  }
+  
+  .bg-dot-pattern {
+    background-image: radial-gradient(
+      circle at center,
+      hsl(var(--foreground) / 0.05) 0.5px,
+      transparent 0.5px
+    );
+    background-size: 24px 24px;
+  }
+
+  /* Hover effect utilities */
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-0.5 hover:shadow-lg;
+  }
+
+  /* Premium gradient text */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500;
+  }
+
+  /* Glass effect */
+  .glass-effect {
+    @apply bg-background/60 backdrop-blur-xl border border-border/40 shadow-sm;
+  }
+
+  /* Premium card effect */
+  .premium-card {
+    @apply rounded-xl border border-border/40 bg-gradient-to-br from-background/95 to-background shadow-xl;
+  }
+}
+
+/* Emoji Picker Dark Mode Overrides */
+[data-theme='dark'] .emoji-mart {
+  --em-rgb-background: 17 17 17;
+  --em-rgb-color: 229 229 229;
+  --em-rgb-input: 30 30 30;
+}
+
+[data-theme='dark'] .emoji-mart {
+  background-color: hsl(var(--background));
+  border-color: hsl(var(--border));
+}
+
+[data-theme='dark'] .emoji-mart button {
+  color: hsl(var(--foreground));
+}
+
+[data-theme='dark'] .emoji-mart-category-label {
+  background-color: hsl(var(--background));
+  color: hsl(var(--muted-foreground));
+}
+
+[data-theme='dark'] .emoji-mart-emoji:hover::before {
+  background-color: hsl(var(--accent));
+}
+
+/* Emoji Picker Animations */
+.emoji-mart {
+  @apply animate-in fade-in zoom-in-95 duration-200;
+}
